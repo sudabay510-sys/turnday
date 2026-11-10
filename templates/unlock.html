@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Unlock your plan — {{ brand.name }}{% endblock %}
+{% block body_class %}page-unlock{% endblock %}
+{% block content %}
+<section class="section">
+  <div class="wrap" style="max-width:40rem">
+    <p class="eyebrow">Already paid?</p>
+    <h1>Unlock your full plan</h1>
+    {% if not configured %}
+      <p class="lede">Checkout for {{ brand.name }} is coming soon. Once it opens, you’ll paste the license key from your Gumroad receipt here to unlock your full plan.</p>
+      <p><a class="btn btn-primary" href="{{ url_for('quiz_start') }}">Take the quiz</a></p>
+    {% elif unlocked %}
+      <div class="plan-section" role="status">
+        <h2>Your key is verified</h2>
+        {% if has_plan %}
+          <p>Your full plan is unlocked on this device.</p>
+          <p><a class="btn btn-primary" href="{{ url_for('results') }}">Open my full plan</a></p>
+        {% else %}
+          <p>We couldn’t find a saved quiz for this browser or your purchase email. Retake the quiz (it takes about two minutes) and your full plan will open unlocked.</p>
+          <p><a class="btn btn-primary" href="{{ url_for('quiz_start') }}">Retake the quiz</a></p>
+        {% endif %}
+      </div>
+    {% else %}
+      <p class="lede">After checkout, Gumroad shows a <strong>license key</strong> on your receipt email and in your Gumroad library. Paste it below to open your full plan.</p>
+      {% if notice == 'inactive' %}<p class="flash" role="alert">Your membership is no longer active, so the full plan is locked again. Restart it from your Gumroad library, then unlock again.</p>{% endif %}
+      {% if error %}<p class="flash" role="alert">{{ error }}</p>{% endif %}
+      <form method="post" action="{{ url_for('unlock') }}" class="stack-form">
+        <input type="hidden" name="form_token" value="{{ form_token }}"/>
+        <label class="field"><span class="label">License key</span>
+          <input class="input" type="text" name="license_key" required maxlength="80" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="XXXXXXXX-XXXXXXXX-XXXXXXXX-XXXXXXXX"/>
+        </label>
+        <label class="field"><span class="label">Email used at checkout (optional)</span>
+          <input class="input" type="email" name="email" maxlength="200" autocomplete="email" value="{{ checkout_email or '' }}" placeholder="you@email.com"/>
+        </label>
+        <button class="btn btn-primary" type="submit">Unlock my plan</button>
+      </form>
+      <p class="tiny muted">We check your key with Gumroad. We store only a fingerprint of it, never the full key. Can’t find your key? Open your Gumroad receipt email or your library at gumroad.com/library.</p>
+      {% if product_url %}<p class="tiny muted">Don’t have a plan yet? <a href="{{ url_for('paywall') if has_plan else url_for('quiz_start') }}">See plans</a>.</p>{% endif %}
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

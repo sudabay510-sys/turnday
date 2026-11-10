@@ -23,12 +23,28 @@
       {% endfor %}
     </div>
 
+    {% if unlocked %}
+    <div class="plan-full" aria-label="Your full plan">
+      <h2>Your full plan</h2>
+      {% for sec in full_sections %}
+      <article class="plan-section">
+        <h3>{{ sec.title }}</h3>
+        {% if sec.get('bullets') %}<ul>{% for b in sec.bullets %}<li>{{ b }}</li>{% endfor %}</ul>{% endif %}
+        {% if sec.get('body') %}<p>{{ sec.body }}</p>{% endif %}
+      </article>
+      {% endfor %}
+      <p><a class="btn btn-ghost" href="{{ url_for('plan_print') }}">Print my full plan</a></p>
+      <p class="tiny muted">Unlocked with your Gumroad license key. Manage or cancel from your Gumroad library.</p>
+    </div>
+    {% else %}
     <div class="plan-locked" aria-label="Locked plan sections">
       <div class="lock-banner">
         <h2>Full plan locked</h2>
         <p>Unlock the full plan with a Monthly or Quarterly subscription. Renews automatically. Cancel anytime from your Gumroad library.</p>
         <a class="btn btn-primary" href="{{ url_for('paywall') }}">Start my plan</a>
         <a class="btn btn-ghost" href="{{ url_for('plan_print') }}">Print preview</a>
+        <p class="tiny"><a href="{{ url_for('unlock') }}">Already paid? Unlock your plan</a></p>
+        {% if unlock_notice == 'inactive' %}<p class="tiny">Your membership is no longer active, so the full plan is locked again.</p>{% endif %}
       </div>
       {% for sec in plan.locked_sections %}
       <article class="plan-section locked">
@@ -37,6 +53,7 @@
       </article>
       {% endfor %}
     </div>
+    {% endif %}
   </div>
 </section>
 {% endblock %}

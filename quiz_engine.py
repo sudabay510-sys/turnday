@@ -11,6 +11,7 @@ from typing import Any, Callable
 from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 
 from db import open_store
+from unlock import full_sections_for, register_unlock
 
 from flask import (
     Flask,
@@ -151,6 +152,11 @@ def create_app(brand: dict[str, Any]) -> Flask:
             "checkout_href": checkout_href(email or None),
         }
 
+    unlocker = register_unlock(
+        app, brand, store, q, x, check_form_token, session_key, load_plan, load_answers,
+        verifier=brand.get("gumroad_verifier"),
+    )
+
     questions = brand["questions"]
 
     @app.get("/")
@@ -240,7 +246,18 @@ def create_app(brand: dict[str, Any]) -> Flask:
         answers = load_answers()
         if not plan:
             return redirect(url_for("quiz_start"))
-        return render_template("results.html", plan=plan, answers=answers, locked=True)
+        unlocked = unlocker.is_unlocked()
+        if unlocked:
+            unlocker.link_session(session_key())
+        return render_template(
+            "results.html",
+            plan=plan,
+            answers=answers,
+            locked=not unlocked,
+            unlocked=unlocked,
+            full_sections=full_sections_for(brand, answers, plan) if unlocked else [],
+            unlock_notice="" if unlocked else unlocker.pop_notice(),
+        )
 
     @app.get("/paywall")
     def paywall():
@@ -309,7 +326,15 @@ def create_app(brand: dict[str, Any]) -> Flask:
         if not plan:
             return redirect(url_for("quiz_start"))
         # Preview-only printable: preview sections unlocked; full sections marked locked
-        return render_template("print.html", plan=plan, answers=answers, preview_only=True)
+        unlocked = unlocker.is_unlocked()
+        return render_template(
+            "print.html",
+            plan=plan,
+            answers=answers,
+            preview_only=not unlocked,
+            unlocked=unlocked,
+            full_sections=full_sections_for(brand, answers, plan) if unlocked else [],
+        )
 
     @app.get("/privacy")
     def privacy():
