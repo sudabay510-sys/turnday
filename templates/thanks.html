@@ -1,13 +1,23 @@
 {% extends "base.html" %}
-{% block title %}You’re on the list — {{ brand.name }}{% endblock %}
+{% block title %}Continue to checkout — {{ brand.name }}{% endblock %}
 {% block content %}
 <section class="section">
   <div class="wrap narrow center">
-    <h1>You’re on the founding list</h1>
-    {% if email %}<p>We’ll use <strong>{{ email }}</strong> only to notify you when checkout opens.</p>{% endif %}
-    <p class="muted">No payment was taken. You can close this tab or print your plan preview.</p>
-    <div class="hero-actions center-row">
-      <a class="btn btn-primary" href="{{ url_for('plan_print') }}">Print preview</a>
+    <h1>Your plan is saved</h1>
+    {% if email %}<p>We’ll keep it with <strong>{{ email }}</strong>. Continue to Gumroad to start your plan.</p>{% else %}<p>Continue to Gumroad to start your plan.</p>{% endif %}
+    <p class="muted">Payments are processed by Gumroad. Renews automatically. Cancel anytime from your Gumroad library.</p>
+    <div class="price-grid" style="margin-top:1.5rem;text-align:left">
+      {% for p in pricing %}
+      <article class="price-card {% if p.id == selected or p.get('featured') and not selected %}featured{% endif %}">
+        <h3>{{ p.name }}</h3>
+        <p class="price"><span class="amount">{{ p.price }}</span><span class="per">{{ p.period }}</span></p>
+        <p class="tiny muted">Renews automatically. Cancel anytime from your Gumroad library.</p>
+        <a class="btn btn-primary btn-block" href="{{ p.checkout_href }}">Start my plan</a>
+      </article>
+      {% endfor %}
+    </div>
+    <div class="hero-actions center-row" style="margin-top:1.5rem">
+      <a class="btn btn-ghost" href="{{ url_for('plan_print') }}">Print preview</a>
       <a class="btn btn-ghost" href="{{ url_for('landing') }}">Back home</a>
     </div>
   </div>

@@ -8,6 +8,7 @@ from datetime import datetime, timezone
 from functools import wraps
 from pathlib import Path
 from typing import Any, Callable
+from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 
 from db import open_store
 
@@ -113,13 +114,41 @@ def create_app(brand: dict[str, Any]) -> Flask:
             return None
         return json.loads(row["plan_json"])
 
+    def checkout_href(email: str | None = None) -> str:
+        base = (brand.get("checkout_url") or "").strip()
+        if not base:
+            return ""
+        parts = urlsplit(base)
+        query = dict(parse_qsl(parts.query, keep_blank_values=True))
+        query["wanted"] = "true"
+        if email:
+            query["email"] = email
+        return urlunsplit((parts.scheme, parts.netloc, parts.path, urlencode(query), parts.fragment))
+
+    def current_checkout_email() -> str:
+        return (session.get("checkout_email") or session.get("founding_email") or "").strip()
+
+    def priced(email: str | None = None) -> list[dict[str, Any]]:
+        href = checkout_href(email)
+        rows = []
+        for item in brand["pricing"]:
+            row = dict(item)
+            if "price" not in row and "intro" in row:
+                row["price"] = row["intro"]
+            row["checkout_href"] = href
+            rows.append(row)
+        return rows
+
     @app.context_processor
     def inject_brand():
         ensure_form_token()
+        email = current_checkout_email()
         return {
             "brand": brand,
             "form_token": session["form_token"],
             "year": datetime.now().year,
+            "checkout_email": email,
+            "checkout_href": checkout_href(email or None),
         }
 
     questions = brand["questions"]
@@ -218,7 +247,8 @@ def create_app(brand: dict[str, Any]) -> Flask:
         plan = load_plan()
         if not plan:
             return redirect(url_for("quiz_start"))
-        return render_template("paywall.html", plan=plan, pricing=brand["pricing"])
+        email = current_checkout_email()
+        return render_template("paywall.html", plan=plan, pricing=priced(email or None))
 
     @app.route("/founding", methods=["GET", "POST"])
     def founding():
@@ -232,25 +262,45 @@ def create_app(brand: dict[str, Any]) -> Flask:
             name = request.form.get("name", "").strip()[:80]
             tier = request.form.get("tier", brand["pricing"][0]["id"])
             if "@" not in email or "." not in email.split("@")[-1]:
-                flash("Enter a valid email so we can notify you when checkout opens.")
-                return render_template("founding.html", plan=plan, pricing=brand["pricing"], selected=tier)
+                flash("Enter a valid email so we can save your plan before checkout.")
+                return render_template(
+                    "founding.html",
+                    plan=plan,
+                    pricing=priced(),
+                    selected=tier,
+                )
             x(
                 "INSERT INTO leads(email, name, plan_tier, answers_json, plan_json, source, created) VALUES(?,?,?,?,?,?,?)",
-                (email, name, tier, json.dumps(answers), json.dumps(plan), "founding", utc_now()),
+                (email, name, tier, json.dumps(answers), json.dumps(plan), "checkout", utc_now()),
             )
             x(
                 "UPDATE quiz_sessions SET email=?, updated=? WHERE session_key=?",
                 (email, utc_now(), session_key()),
             )
             session["founding_email"] = email
+            session["checkout_email"] = email
+            session["checkout_tier"] = tier
+            if request.form.get("next") == "paywall":
+                return redirect(url_for("paywall"))
             return redirect(url_for("founding_thanks"))
         selected = request.args.get("tier", brand["pricing"][0]["id"])
-        return render_template("founding.html", plan=plan, pricing=brand["pricing"], selected=selected)
+        email = current_checkout_email()
+        return render_template(
+            "founding.html",
+            plan=plan,
+            pricing=priced(email or None),
+            selected=selected,
+        )
 
     @app.get("/founding/thanks")
     def founding_thanks():
-        email = session.get("founding_email", "")
-        return render_template("thanks.html", email=email)
+        email = current_checkout_email()
+        return render_template(
+            "thanks.html",
+            email=email,
+            pricing=priced(email or None),
+            selected=session.get("checkout_tier", ""),
+        )
 
     @app.get("/plan/print")
     def plan_print():

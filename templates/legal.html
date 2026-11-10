@@ -5,14 +5,15 @@
   <div class="wrap narrow prose">
     {% if kind == 'privacy' %}
     <h1>Privacy</h1>
-    <p>This is an early-access site. Quiz answers and founding-list emails are stored in a hosted database used only for this site. Don’t enter health records, payment details, or government ID numbers.</p><p>We use your email only to tell you when checkout opens for the plan you chose. You can ask us to delete it at any time.</p>
-    <p>We do not sell your data. No third-party analytics are wired in this build. Do not enter sensitive health, payment, or government ID data.</p>
-    <p>To request deletion of a local lead row, contact the operator who runs this instance (admin password required).</p>
+    <p>Quiz answers and the email you give us are stored in a hosted database used only for this product, so we can save your plan. When a hosted database is not configured, they are stored in a local file on the machine running the app.</p>
+    <p>We use your email to save your plan and to connect you to checkout. Payments are processed by Gumroad, not on this site — do not enter payment card details, health records, or government ID numbers here.</p>
+    <p>We do not sell your data. No third-party analytics are wired in this build. You can ask the operator to delete your saved lead (admin access required).</p>
     {% elif kind == 'terms' %}
     <h1>Terms</h1>
-    <p>This site is in early access. No paid subscription is sold here yet. “Checkout coming soon / founding list” does not create a billing relationship.</p>
     <p>Plans are educational checklists generated from your answers by deterministic rules. They are not professional advice.</p>
-    <p>You may cancel any future subscription (when live) anytime before renewal; exact cancel steps will be shown before any charge.</p>
+    <p>Paid subscriptions are sold on Gumroad. Payments are processed by Gumroad, not on this site. Prices are Monthly or Quarterly as shown on the pricing page and at checkout.</p>
+    <p>Renews automatically. Cancel anytime from your Gumroad library.</p>
+    <p>Refunds are handled under Gumroad’s refund policy. This product does not offer a separate 30-day money-back guarantee.</p>
     {% else %}
     <h1>Disclaimer</h1>
     <p>{{ brand.disclaimer_long }}</p>

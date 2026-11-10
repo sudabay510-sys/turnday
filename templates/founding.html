@@ -1,21 +1,21 @@
 {% extends "base.html" %}
-{% block title %}Founding list — {{ brand.name }}{% endblock %}
+{% block title %}Save your plan — {{ brand.name }}{% endblock %}
 {% block content %}
 <section class="section">
   <div class="wrap narrow">
-    <h1>Join the founding list</h1>
-    <p class="lede">Checkout is not live. Leave your email and we’ll notify you when paid plans open. No charge today.</p>
+    <h1>Save your plan, then check out</h1>
+    <p class="lede">Leave your email so we can keep your plan, then continue to Gumroad to start it.</p>
     <form method="post" class="stack-form">
       <input type="hidden" name="form_token" value="{{ form_token }}"/>
       <input type="hidden" name="tier" value="{{ selected }}"/>
       <label class="field"><span class="label">Email</span>
-        <input class="input" type="email" name="email" required autocomplete="email" placeholder="you@business.com"/>
+        <input class="input" type="email" name="email" required autocomplete="email" value="{{ checkout_email or '' }}" placeholder="you@email.com"/>
       </label>
       <label class="field"><span class="label">Name (optional)</span>
         <input class="input" type="text" name="name" maxlength="80" autocomplete="name"/>
       </label>
-      <p class="tiny muted">Selected planned tier: <strong>{{ selected }}</strong></p>
-      <button class="btn btn-primary" type="submit">Save my spot</button>
+      <p class="tiny muted">Selected term: <strong>{{ selected }}</strong></p>
+      <button class="btn btn-primary" type="submit">Save and continue to checkout</button>
     </form>
   </div>
 </section>

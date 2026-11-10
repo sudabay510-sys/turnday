@@ -90,20 +90,20 @@
 <section class="section alt" id="pricing">
   <div class="wrap">
     <h2>Honest pricing</h2>
-    <p class="section-lede">Checkout is not live yet. Join the founding list and we’ll email you when it opens. Prices below are the planned terms.</p>
+    <p class="section-lede">Monthly and quarterly plans. You’ll pay on Gumroad. Renews automatically. Cancel anytime from your Gumroad library.</p>
     <div class="price-grid">
       {% for p in brand.pricing %}
       <article class="price-card {% if p.get('featured') %}featured{% endif %}">
         {% if p.get('featured') %}<span class="badge">Most chosen</span>{% endif %}
         <h3>{{ p.name }}</h3>
-        <p class="price"><span class="amount">{{ p.intro }}</span><span class="per">{{ p.period }}</span></p>
-        <p class="tiny muted">{% if p.get('renewal_note') %}{{ p.renewal_note }}{% else %}Then renews at {{ p.renewal }} unless you cancel. Cancel anytime before renewal.{% endif %}</p>
+        <p class="price"><span class="amount">{{ p.price }}</span><span class="per">{{ p.period }}</span></p>
+        <p class="tiny muted">Renews automatically. Cancel anytime from your Gumroad library.</p>
         <ul>{% for i in p.includes %}<li>{{ i }}</li>{% endfor %}</ul>
         <a class="btn {% if p.get('featured') %}btn-primary{% else %}btn-ghost{% endif %} btn-block" href="{{ url_for('quiz_start') }}">Start with the quiz</a>
       </article>
       {% endfor %}
     </div>
-    <p class="tiny muted center">No fake countdown timers. No “spots left” scare copy. Clear renewal terms before any future charge.</p>
+    <p class="tiny muted center">No fake countdown timers. No “spots left” scare copy. Payments processed by Gumroad.</p>
   </div>
 </section>
 
