@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}You’re on the list — {{ brand.name }}{% endblock %}
+{% block content %}
+<section class="section">
+  <div class="wrap narrow center">
+    <h1>You’re on the founding list</h1>
+    {% if email %}<p>We’ll use <strong>{{ email }}</strong> only to notify you when checkout opens.</p>{% endif %}
+    <p class="muted">No payment was taken. You can close this tab or print your plan preview.</p>
+    <div class="hero-actions center-row">
+      <a class="btn btn-primary" href="{{ url_for('plan_print') }}">Print preview</a>
+      <a class="btn btn-ghost" href="{{ url_for('landing') }}">Back home</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

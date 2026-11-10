@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Your plan — {{ brand.name }}{% endblock %}
+{% block body_class %}page-results{% endblock %}
+{% block content %}
+<section class="section">
+  <div class="wrap">
+    <p class="eyebrow">Your personalized plan</p>
+    <h1>{{ plan.title }}</h1>
+    <p class="lede">{{ plan.summary }}</p>
+    <p class="tiny muted">{{ brand.disclaimer_short }}</p>
+    {% if brand.get('safety_note') %}
+<aside class="safety" role="note" aria-label="Safety note"><strong>{{ brand.safety_title or "Important" }}:</strong> {{ brand.safety_note }}</aside>
+{% endif %}
+
+    <div class="plan-preview">
+      <h2>Unlocked preview</h2>
+      {% for sec in plan.preview_sections %}
+      <article class="plan-section">
+        <h3>{{ sec.title }}</h3>
+        {% if sec.get('bullets') %}<ul>{% for b in sec.bullets %}<li>{{ b }}</li>{% endfor %}</ul>{% endif %}
+        {% if sec.get('body') %}<p>{{ sec.body }}</p>{% endif %}
+      </article>
+      {% endfor %}
+    </div>
+
+    <div class="plan-locked" aria-label="Locked plan sections">
+      <div class="lock-banner">
+        <h2>Full plan locked</h2>
+        <p>Join the founding list to be notified when checkout opens. No charge today.</p>
+        <a class="btn btn-primary" href="{{ url_for('paywall') }}">Start my plan</a>
+        <a class="btn btn-ghost" href="{{ url_for('plan_print') }}">Print preview</a>
+      </div>
+      {% for sec in plan.locked_sections %}
+      <article class="plan-section locked">
+        <h3>{{ sec.title }}</h3>
+        <p class="blur">{{ sec.teaser }}</p>
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

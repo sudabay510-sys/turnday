@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Admin — {{ brand.name }}{% endblock %}
+{% block content %}
+<section class="section"><div class="wrap narrow">
+  <h1>Admin login</h1>
+  <p class="muted">Set the {{ brand.admin_env }} environment variable, then enter it here.</p>
+  <form method="post" class="stack-form">
+    <input type="hidden" name="form_token" value="{{ form_token }}"/>
+    <label class="field"><span class="label">Password</span>
+      <input class="input" type="password" name="password" required/>
+    </label>
+    <button class="btn btn-primary" type="submit">Enter</button>
+  </form>
+</div></section>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}{{ kind|capitalize }} — {{ brand.name }}{% endblock %}
+{% block content %}
+<section class="section">
+  <div class="wrap narrow prose">
+    {% if kind == 'privacy' %}
+    <h1>Privacy</h1>
+    <p>This is an early-access site. Quiz answers and founding-list emails are stored in a hosted database used only for this site. Don’t enter health records, payment details, or government ID numbers.</p><p>We use your email only to tell you when checkout opens for the plan you chose. You can ask us to delete it at any time.</p>
+    <p>We do not sell your data. No third-party analytics are wired in this build. Do not enter sensitive health, payment, or government ID data.</p>
+    <p>To request deletion of a local lead row, contact the operator who runs this instance (admin password required).</p>
+    {% elif kind == 'terms' %}
+    <h1>Terms</h1>
+    <p>This site is in early access. No paid subscription is sold here yet. “Checkout coming soon / founding list” does not create a billing relationship.</p>
+    <p>Plans are educational checklists generated from your answers by deterministic rules. They are not professional advice.</p>
+    <p>You may cancel any future subscription (when live) anytime before renewal; exact cancel steps will be shown before any charge.</p>
+    {% else %}
+    <h1>Disclaimer</h1>
+    <p>{{ brand.disclaimer_long }}</p>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

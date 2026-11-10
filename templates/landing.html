@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+{% block title %}{{ brand.name }} — {{ brand.tagline }}{% endblock %}
+{% block body_class %}page-landing{% endblock %}
+{% block content %}
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <p class="eyebrow">{{ brand.eyebrow }}</p>
+      <h1>{{ brand.hero_title }}</h1>
+      <p class="lede">{{ brand.hero_lede }}</p>
+      <div class="hero-actions">
+        <a class="btn btn-lg btn-primary" href="{{ url_for('quiz_start') }}">{{ brand.cta_primary }}</a>
+        <a class="btn btn-lg btn-ghost" href="#how">See how it works</a>
+      </div>
+      <p class="tiny muted">{{ brand.honesty_line }}</p>
+      {% if brand.get('safety_note') %}
+<aside class="safety" role="note" aria-label="Safety note"><strong>{{ brand.safety_title or "Important" }}:</strong> {{ brand.safety_note }}</aside>
+{% endif %}
+    </div>
+    <div class="hero-card" aria-hidden="true">
+      <div class="card-label">Sample plan peek</div>
+      <ul class="peek-list">
+        {% for b in brand.sample_peek %}
+        <li><span class="dot"></span>{{ b }}</li>
+        {% endfor %}
+      </ul>
+      <div class="card-fade">Full plan unlocks after your quiz</div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section journey" id="journey" aria-labelledby="journey-h">
+  <div class="wrap">
+    <p class="eyebrow">Your journey</p>
+    <h2 id="journey-h">{{ brand.journey_title or "Where it usually breaks — and what your plan does" }}</h2>
+    <ol class="journey-grid">
+      {% for j in brand.journey %}
+      <li class="journey-card">
+        <span class="journey-step">{{ loop.index }}</span>
+        <h3>{{ j.stage }}</h3>
+        <p class="muted"><strong>Pain:</strong> {{ j.pain }}</p>
+        <p><strong>Your plan:</strong> {{ j.fix }}</p>
+      </li>
+      {% endfor %}
+    </ol>
+  </div>
+</section>
+
+<section class="section" id="for">
+  <div class="wrap">
+    <h2>Who it’s for</h2>
+    <p class="section-lede">{{ brand.audience_line }}</p>
+    <div class="pill-row">
+      {% for p in brand.personas %}
+      <div class="pill-card"><h3>{{ p.title }}</h3><p>{{ p.text }}</p></div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section alt" id="how">
+  <div class="wrap">
+    <h2>How it works</h2>
+    <ol class="steps">
+      {% for s in brand.how_steps %}
+      <li>
+        <span class="step-num">{{ loop.index }}</span>
+        <div><h3>{{ s.title }}</h3><p>{{ s.text }}</p></div>
+      </li>
+      {% endfor %}
+    </ol>
+    <div class="center">
+      <a class="btn btn-primary" href="{{ url_for('quiz_start') }}">{{ brand.cta_primary }}</a>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="peek">
+  <div class="wrap">
+    <h2>What’s inside a plan</h2>
+    <div class="feature-grid">
+      {% for f in brand.features %}
+      <article class="feature"><h3>{{ f.title }}</h3><p>{{ f.text }}</p></article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section alt" id="pricing">
+  <div class="wrap">
+    <h2>Honest pricing</h2>
+    <p class="section-lede">Checkout is not live yet. Join the founding list and we’ll email you when it opens. Prices below are the planned terms.</p>
+    <div class="price-grid">
+      {% for p in brand.pricing %}
+      <article class="price-card {% if p.get('featured') %}featured{% endif %}">
+        {% if p.get('featured') %}<span class="badge">Most chosen</span>{% endif %}
+        <h3>{{ p.name }}</h3>
+        <p class="price"><span class="amount">{{ p.intro }}</span><span class="per">{{ p.period }}</span></p>
+        <p class="tiny muted">{% if p.get('renewal_note') %}{{ p.renewal_note }}{% else %}Then renews at {{ p.renewal }} unless you cancel. Cancel anytime before renewal.{% endif %}</p>
+        <ul>{% for i in p.includes %}<li>{{ i }}</li>{% endfor %}</ul>
+        <a class="btn {% if p.get('featured') %}btn-primary{% else %}btn-ghost{% endif %} btn-block" href="{{ url_for('quiz_start') }}">Start with the quiz</a>
+      </article>
+      {% endfor %}
+    </div>
+    <p class="tiny muted center">No fake countdown timers. No “spots left” scare copy. Clear renewal terms before any future charge.</p>
+  </div>
+</section>
+
+<section class="section" id="trust">
+  <div class="wrap">
+    <h2>Built with care</h2>
+    <div class="trust-grid">
+      {% for t in brand.trust_points %}
+      <div><h3>{{ t.title }}</h3><p>{{ t.text }}</p></div>
+      {% endfor %}
+    </div>
+    <p class="tiny muted">We do not invent testimonials or inflated user counts. When real customer stories exist, they’ll be attributed and permissioned.</p>
+  </div>
+</section>
+
+<section class="section alt" id="faq">
+  <div class="wrap narrow">
+    <h2>FAQ</h2>
+    {% for f in brand.faq %}
+    <details class="faq-item">
+      <summary>{{ f.q }}</summary>
+      <p>{{ f.a }}</p>
+    </details>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="wrap center">
+    <h2>{{ brand.cta_band_title }}</h2>
+    <p>{{ brand.cta_band_text }}</p>
+    <a class="btn btn-lg btn-primary" href="{{ url_for('quiz_start') }}">{{ brand.cta_primary }}</a>
+  </div>
+</section>
+{% endblock %}

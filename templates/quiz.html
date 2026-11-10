@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}Question {{ n }} of {{ total }} — {{ brand.name }}{% endblock %}
+{% block body_class %}page-quiz{% endblock %}
+{% block content %}
+<section class="quiz-shell">
+  <div class="wrap narrow">
+    <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ progress }}" aria-label="Quiz progress">
+      <div class="progress-bar" style="width: {{ progress }}%"></div>
+    </div>
+    <p class="tiny muted">Step {{ n }} of {{ total }}</p>
+    <h1 class="quiz-q">{{ q.prompt }}</h1>
+    {% if q.get('help') %}<p class="muted">{{ q.help }}</p>{% endif %}
+    <form method="post" class="quiz-form" novalidate>
+      <input type="hidden" name="form_token" value="{{ form_token }}"/>
+      {% if q.type == 'choice' %}
+        <fieldset class="choices">
+          <legend class="sr-only">{{ q.prompt }}</legend>
+          {% for opt in q.options %}
+          <label class="choice">
+            <input type="{% if q.get('multi') %}checkbox{% else %}radio{% endif %}" name="answer" value="{{ opt.id }}"
+              {% if q.get('multi') %}
+                {% if answers.get(q.id) and opt.id in answers.get(q.id) %}checked{% endif %}
+              {% else %}
+                {% if answers.get(q.id) == opt.id %}checked{% endif %}
+              {% endif %}
+            />
+            <span class="choice-body">
+              <strong>{{ opt.label }}</strong>
+              {% if opt.get('hint') %}<span class="muted">{{ opt.hint }}</span>{% endif %}
+            </span>
+          </label>
+          {% endfor %}
+        </fieldset>
+      {% elif q.type == 'text' %}
+        <label class="field">
+          <span class="sr-only">{{ q.prompt }}</span>
+          <input class="input" type="text" name="answer" maxlength="120" value="{{ answers.get(q.id, '') }}" placeholder="{{ q.get('placeholder', '') }}" {% if not q.get('optional') %}required{% endif %}/>
+        </label>
+      {% endif %}
+      {% if q.get('text_followup') %}
+        <label class="field">
+          <span class="label">{{ q.text_followup }}</span>
+          <input class="input" type="text" name="followup" maxlength="200" value="{{ answers.get(q.id + '_detail', '') }}" placeholder="Optional"/>
+        </label>
+      {% endif %}
+      <div class="quiz-nav">
+        {% if n > 1 %}
+        <button class="btn btn-ghost" type="submit" name="action" value="back">Back</button>
+        {% else %}
+        <a class="btn btn-ghost" href="{{ url_for('landing') }}">Cancel</a>
+        {% endif %}
+        <button class="btn btn-primary" type="submit" name="action" value="next">{% if n == total %}See my plan{% else %}Continue{% endif %}</button>
+      </div>
+    </form>
+  </div>
+</section>
+{% endblock %}

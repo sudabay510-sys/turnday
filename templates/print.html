@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <title>{{ plan.title }} — preview — {{ brand.name }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='brand.css') }}"/>
+  <style>body{background:#fff;color:#111}.site-header,.site-footer{display:none}.lock-note{border:1px dashed #999;padding:1rem;margin:1rem 0}</style>
+</head>
+<body class="print">
+  <main class="wrap">
+    <h1>{{ plan.title }}</h1>
+    <p>{{ plan.summary }}</p>
+    <p class="tiny">{{ brand.disclaimer_short }}</p>
+    <p class="lock-note">Printable preview only. Locked sections are summarized, not fully revealed, until a future paid unlock.</p>
+    {% for sec in plan.preview_sections %}
+      <h2>{{ sec.title }}</h2>
+      {% if sec.bullets %}<ul>{% for b in sec.bullets %}<li>{{ b }}</li>{% endfor %}</ul>{% endif %}
+      {% if sec.body %}<p>{{ sec.body }}</p>{% endif %}
+    {% endfor %}
+    <h2>Coming in the full plan</h2>
+    <ul>{% for sec in plan.locked_sections %}<li>{{ sec.title }} — {{ sec.teaser }}</li>{% endfor %}</ul>
+    <button onclick="window.print()">Print</button>
+  </main>
+</body>
+</html>

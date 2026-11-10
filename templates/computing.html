@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Building your plan — {{ brand.name }}{% endblock %}
+{% block body_class %}page-computing{% endblock %}
+{% block content %}
+<section class="quiz-shell">
+  <div class="wrap narrow center">
+    <div class="spinner" aria-hidden="true"></div>
+    <h1>Building your personalized plan</h1>
+    <p class="muted">Matching your answers to a structured roadmap. This is a local demo — no cloud AI call.</p>
+    <p class="tiny muted" id="status">Drafting priorities…</p>
+  </div>
+</section>
+{% endblock %}
+{% block scripts %}
+<script>
+  const lines = ["Drafting priorities…", "Ordering weekly steps…", "Adding checklists…", "Almost ready…"];
+  let i = 0;
+  const el = document.getElementById("status");
+  const t = setInterval(() => { i = (i + 1) % lines.length; if (el) el.textContent = lines[i]; }, 700);
+  setTimeout(() => { clearInterval(t); window.location = "{{ url_for('results') }}"; }, 2200);
+</script>
+{% endblock %}

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="description" content="{{ brand.tagline }}"/>
+  <title>{% block title %}{{ brand.name }}{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="{{ brand.font_url }}" rel="stylesheet"/>
+  <link rel="stylesheet" href="{{ url_for('static', filename='brand.css') }}"/>
+  <link rel="icon" href="{{ url_for('static', filename='logo.svg') }}" type="image/svg+xml"/>
+</head>
+<body class="{% block body_class %}{% endblock %}">
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="logo" href="{{ url_for('landing') }}">
+        <img src="{{ url_for('static', filename='logo.svg') }}" width="36" height="36" alt=""/>
+        <span>{{ brand.name }}</span>
+      </a>
+      <nav class="nav" aria-label="Primary">
+        <a href="{{ url_for('landing') }}#how">How it works</a>
+        <a href="{{ url_for('landing') }}#pricing">Pricing</a>
+        <a class="btn btn-sm btn-primary" href="{{ url_for('quiz_start') }}">{{ brand.cta_short }}</a>
+      </nav>
+    </div>
+  </header>
+  <main id="main">
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="wrap flashes" role="status">
+          {% for m in messages %}<p class="flash">{{ m }}</p>{% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </main>
+  <footer class="site-footer">
+    <div class="wrap footer-grid">
+      <div>
+        <strong>{{ brand.name }}</strong>
+        <p class="muted">{{ brand.tagline }}</p>
+        <p class="tiny muted">Early access · Checkout not live — no payments processed · Independent product, not affiliated with RiseGuide</p>
+      </div>
+      <div class="footer-links">
+        <a href="{{ url_for('privacy') }}">Privacy</a>
+        <a href="{{ url_for('terms') }}">Terms</a>
+        <a href="{{ url_for('disclaimer') }}">Disclaimer</a>
+      </div>
+    </div>
+  </footer>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

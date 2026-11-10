@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Choose a plan — {{ brand.name }}{% endblock %}
+{% block body_class %}page-paywall{% endblock %}
+{% block content %}
+<section class="section">
+  <div class="wrap">
+    <p class="eyebrow">Checkout coming soon</p>
+    <h1>Start my plan</h1>
+    <p class="lede">Pick a term. This is a founding-list flow — <strong>no real payment</strong> is processed on this prototype.</p>
+    <div class="price-grid">
+      {% for p in pricing %}
+      <article class="price-card {% if p.get('featured') %}featured{% endif %}">
+        {% if p.get('featured') %}<span class="badge">Most chosen</span>{% endif %}
+        <h3>{{ p.name }}</h3>
+        <p class="price"><span class="amount">{{ p.intro }}</span><span class="per">{{ p.period }}</span></p>
+        <p class="tiny muted">{% if p.get('renewal_note') %}{{ p.renewal_note }}{% else %}Renews at {{ p.renewal }} · Cancel anytime before renewal{% endif %}</p>
+        <ul>{% for i in p.includes %}<li>{{ i }}</li>{% endfor %}</ul>
+        <a class="btn btn-primary btn-block" href="{{ url_for('founding', tier=p.id) }}">Join founding list — {{ p.name }}</a>
+      </article>
+      {% endfor %}
+    </div>
+    <p class="tiny muted center">By continuing you agree to the <a href="{{ url_for('terms') }}">Terms</a> and <a href="{{ url_for('disclaimer') }}">Disclaimer</a>. No charge today.</p>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Leads — {{ brand.name }}{% endblock %}
+{% block content %}
+<section class="section"><div class="wrap">
+  <h1>Founding leads</h1>
+  <p class="tiny muted">Local SQLite only. Not production.</p>
+  <table class="table">
+    <thead><tr><th>ID</th><th>Email</th><th>Name</th><th>Tier</th><th>Created</th></tr></thead>
+    <tbody>
+    {% for L in leads %}
+      <tr><td>{{ L.id }}</td><td>{{ L.email }}</td><td>{{ L.name or '—' }}</td><td>{{ L.plan_tier }}</td><td>{{ L.created }}</td></tr>
+    {% else %}
+      <tr><td colspan="5">No leads yet.</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  <h2>Recent quiz sessions</h2>
+  <table class="table">
+    <thead><tr><th>ID</th><th>Key</th><th>Email</th><th>Updated</th></tr></thead>
+    <tbody>
+    {% for S in sessions %}
+      <tr><td>{{ S.id }}</td><td class="tiny">{{ S.session_key }}</td><td>{{ S.email or '—' }}</td><td>{{ S.updated }}</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div></section>
+{% endblock %}
