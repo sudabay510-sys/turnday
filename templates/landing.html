@@ -2,10 +2,9 @@
 {% block title %}{{ brand.name }} — {{ brand.tagline }}{% endblock %}
 {% block body_class %}page-landing{% endblock %}
 {% block content %}
-<section class="hero">
+<section class="hero ly-hero">
   <div class="wrap hero-grid">
-    <div class="hero-copy">
-      <p class="eyebrow">{{ brand.eyebrow }}</p>
+    <div class="hero-copy"><p class="eyebrow">{{ brand.eyebrow }}</p>
       <h1>{{ brand.hero_title }}</h1>
       <p class="lede">{{ brand.hero_lede }}</p>
       <div class="hero-actions">
@@ -15,22 +14,25 @@
       <p class="tiny muted">{{ brand.honesty_line }}</p>
       {% if brand.get('safety_note') %}
 <aside class="safety" role="note" aria-label="Safety note"><strong>{{ brand.safety_title or "Important" }}:</strong> {{ brand.safety_note }}</aside>
-{% endif %}
-    </div>
-    <div class="hero-card" aria-hidden="true">
-      <div class="card-label">Sample plan peek</div>
-      <ul class="peek-list">
-        {% for b in brand.sample_peek %}
-        <li><span class="dot"></span>{{ b }}</li>
-        {% endfor %}
-      </ul>
+{% endif %}</div>
+    <div class="hero-card td-hanger" aria-label="Sample plan peek">
+      <div class="card-label">Ready for guests · sample plan peek</div>
+      <ul class="peek-list">{% for b in brand.sample_peek %}<li><span class="dot"></span>{{ b }}</li>{% endfor %}</ul>
       <div class="card-fade">Full plan unlocks after your quiz</div>
     </div>
   </div>
 </section>
+<section class="section td-clock-s" aria-labelledby="tdc-h">
+  <div class="wrap"><div class="td-clock">
+    <p class="eyebrow">Example turnover day</p>
+    <h2 id="tdc-h">The 11:00 → 16:00 window, mapped</h2>
+    <ol class="td-tl"><li><b>11:00</b>Checkout</li><li><b>11:15</b>Strip &amp; start laundry</li><li><b>12:00</b>Clean room by room</li><li><b>14:00</b>Restock to par</li><li><b>14:30</b>Photo-proof walk</li><li><b>16:00</b>Check-in</li></ol>
+    <p class="tiny muted">Illustration. Your checklist follows your own checkout and check-in times.</p>
+  </div></div>
+</section>
 
 
-<section class="section journey" id="journey" aria-labelledby="journey-h">
+<section class="section journey td-stops" id="journey" aria-labelledby="journey-h">
   <div class="wrap">
     <p class="eyebrow">Your journey</p>
     <h2 id="journey-h">{{ brand.journey_title or "Where it usually breaks — and what your plan does" }}</h2>
