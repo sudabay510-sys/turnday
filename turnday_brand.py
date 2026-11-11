@@ -122,7 +122,7 @@ BRAND = {
     "checkout_url": "https://solvfix.gumroad.com/l/gbzwxh",
     "disclaimer_short": "Operations education only. Not affiliated with Airbnb/Vrbo. No occupancy, revenue, or rating guarantees. Not legal or tax advice.",
     "disclaimer_long": "Turnday provides general hosting operations checklists and message templates. It is not affiliated with Airbnb, Vrbo, or any booking platform. It does not guarantee bookings, revenue, reviews, or platform status, and it is not legal, tax, or insurance advice. Short-term rental rules vary by location; check official local requirements. Payments are processed by Gumroad, not on this site.",
-    "font_url": "https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Inter:wght@400;500;600&display=swap",
+    "font_url": "https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap",
     "fonts": ("Outfit", "Inter"),
     "questions": Q, "generate_plan": plan,
     "voice": "Calm, practical, hospitable. Like an experienced co-host leaving you a tidy note.",

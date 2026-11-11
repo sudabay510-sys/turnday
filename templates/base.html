@@ -9,9 +9,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="{{ brand.font_url }}" rel="stylesheet"/>
   <link rel="stylesheet" href="{{ url_for('static', filename='brand.css') }}"/>
+  <link rel="stylesheet" href="{{ url_for('static', filename='identity.css') }}"/>
   <link rel="icon" href="{{ url_for('static', filename='logo.svg') }}" type="image/svg+xml"/>
 </head>
-<body class="{% block body_class %}{% endblock %}">
+<body class="{% block body_class %}{% endblock %}" data-brand="turnday">
   <a class="skip" href="#main">Skip to content</a>
   <header class="site-header">
     <div class="wrap header-inner">
