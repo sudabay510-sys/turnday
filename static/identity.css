@@ -1,0 +1,36 @@
+/* Turnday identity layer, Nov 2026 refresh: Boutique-hotel door hanger. Loaded after brand.css; visual only. */
+:root{--bg:#F4F8FB;--bg-alt:#E8F1F6;--card:#FFFFFF;--ink:#12355B;--muted:#4E6378;--line:#D6E2EC;--accent:#12355B;--accent-2:#0B2541;--on-accent:#FFFFFF;--hi:#F28C6B;--radius:14px;--focus:#B8492A;
+--font-display:'Sora', system-ui, sans-serif;--font-body:'Inter', system-ui, sans-serif;--tracking:-0.025em;--cta-band-bg:#12355B;--cta-band-ink:#F4F8FB;--cta-band-btn:#F28C6B;--cta-band-btn-ink:#12355B;
+--shadow-card:0 14px 34px rgba(0,0,0,.10);--shadow-btn:none}
+body{font-family:var(--font-body);background:var(--bg);color:var(--ink)}
+.skip:focus{background:var(--card);color:var(--ink);outline:3px solid var(--focus)}
+.btn:focus-visible,.choice:focus-within,a:focus-visible,.input:focus{outline:3px solid var(--focus);outline-offset:2px}
+.choice:has(input:checked){border-color:var(--accent);box-shadow:0 0 0 2px var(--accent) inset}
+.choice input{accent-color:var(--accent);width:1.15rem;height:1.15rem;flex:none}
+.choice{min-height:3.25rem}
+.btn{min-height:2.75rem}
+.nav a.btn-primary,.nav a.btn-primary:hover{color:var(--on-accent)}
+.safety{border-left-width:6px;border-left-style:solid}
+@media (max-width:560px){.choice{padding:.9rem 1rem}.quiz-q{font-size:1.45rem}}
+
+h1,h2,h3{font-weight:700}
+.hero{background:radial-gradient(600px 300px at 90% 0%,rgba(242,140,107,.22),transparent 60%),linear-gradient(180deg,#E8F1F6,var(--bg))}
+.hero-card{border-radius:160px 160px 26px 26px;padding:5.5rem 1.75rem 1.75rem;border:0;box-shadow:0 20px 50px rgba(18,53,91,.14)}
+.hero-card::before{content:"";position:absolute;top:24px;left:50%;width:58px;height:58px;margin-left:-29px;border-radius:50%;background:var(--bg);box-shadow:inset 0 2px 6px rgba(18,53,91,.22)}
+.hero-card .card-label{text-align:center}
+.dot{border-radius:6px;width:1rem;height:1rem;margin-top:.2rem;background:#8FD3C7;border:2px solid #3E8E82}
+.peek-list li{border-bottom:1px dashed var(--line)}
+.page-quiz .quiz-shell .wrap.narrow{background:var(--card);border-radius:200px 200px 28px 28px;padding:6rem clamp(1.1rem,5vw,2.4rem) 2rem;position:relative;box-shadow:0 20px 50px rgba(18,53,91,.14);margin-top:1rem}
+.page-quiz .quiz-shell .wrap.narrow::before{content:"";position:absolute;top:24px;left:50%;width:58px;height:58px;margin-left:-29px;border-radius:50%;background:var(--bg);box-shadow:inset 0 2px 6px rgba(18,53,91,.22)}
+.quiz-q{text-align:center}
+.page-quiz .tiny.muted{text-align:center;text-transform:uppercase;letter-spacing:.1em}
+.choice{background:var(--bg);border-width:1.5px}
+.choice:has(input:checked){background:#E7F3F1;border-color:var(--ink);box-shadow:none}
+.progress{height:.5rem}.progress-bar{background:linear-gradient(90deg,#8FD3C7,#F28C6B)}
+.btn{border-radius:12px}
+.plan-section{border-top:6px solid #8FD3C7}
+.plan-preview .plan-section:first-of-type{border-top-color:#F28C6B}
+.step-num,.journey-step{background:#8FD3C7;color:var(--ink)}
+.eyebrow{color:#B8492A}
+.journey-card{border-top:4px solid #F28C6B}
+.safety{background:#FFF1EC;border-color:#F28C6B;border-left-color:#B8492A}

@@ -59,3 +59,24 @@ Calm, practical, hospitable. Like an experienced co-host leaving you a tidy note
 - Promise bookings, nightly-rate gains, or Superhost.
 - Fake testimonials, user counts, stats, or press logos.
 - Countdown timers, “spots left”, or other urgency/scare copy.
+
+
+## Identity refresh (Nov 2026)
+
+Visual layer only (`static/identity.css`, `static/logo.svg`, Google Fonts URL). Quiz questions, plan generation, routes, pricing, checkout/unlock, and safety notes are unchanged.
+
+- **Concept:** Boutique-hotel door hanger. Hospitality calm: the quiz literally sits on a door hanger, the turnover is a time-of-day line, and the guest messages are a five-stop timeline.
+- **Type:** Sora (display) / Inter (body)
+- **Voice:** An experienced co-host leaving a tidy note: calm, practical, warm with guests and fair to cleaners.
+- **Persona (design assumption, not research):** Marisol, side-gig host with one cabin (assumption): Day job, one cabin two hours away, a regular cleaner, and turnovers that eat Sundays.
+
+| Color | Hex |
+|---|---|
+| Harbor white | `#F4F8FB` |
+| Coastal navy | `#12355B` |
+| Sea glass | `#8FD3C7` |
+| Sunrise coral | `#F28C6B` |
+| Coral text | `#B8492A` |
+| Slate | `#4E6378` |
+
+Full brand guide, persona, and journey: `quiz-to-plan-redesign/products/turnday/brand.html`.
