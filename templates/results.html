@@ -4,10 +4,13 @@
 {% block content %}
 <section class="section">
   <div class="wrap">
-    <p class="eyebrow">Your personalized plan</p>
-    <h1>{{ plan.title }}</h1>
+    <div class="td-style">
+      <div class="td-key" aria-hidden="true"></div>
+      <div><p class="eyebrow">Your personalized plan</p>
+      <h1>{{ plan.title }}</h1>
     <p class="lede">{{ plan.summary }}</p>
-    <p class="tiny muted">{{ brand.disclaimer_short }}</p>
+    <p class="tiny muted">{{ brand.disclaimer_short }}</p></div>
+    </div>
     {% if brand.get('safety_note') %}
 <aside class="safety" role="note" aria-label="Safety note"><strong>{{ brand.safety_title or "Important" }}:</strong> {{ brand.safety_note }}</aside>
 {% endif %}
@@ -15,7 +18,7 @@
     <div class="plan-preview">
       <h2>Unlocked preview</h2>
       {% for sec in plan.preview_sections %}
-      <article class="plan-section">
+      <article class="plan-section td-panel">
         <h3>{{ sec.title }}</h3>
         {% if sec.get('bullets') %}<ul>{% for b in sec.bullets %}<li>{{ b }}</li>{% endfor %}</ul>{% endif %}
         {% if sec.get('body') %}<p>{{ sec.body }}</p>{% endif %}
@@ -27,7 +30,7 @@
     <div class="plan-full" aria-label="Your full plan">
       <h2>Your full plan</h2>
       {% for sec in full_sections %}
-      <article class="plan-section">
+      <article class="plan-section td-panel">
         <h3>{{ sec.title }}</h3>
         {% if sec.get('bullets') %}<ul>{% for b in sec.bullets %}<li>{{ b }}</li>{% endfor %}</ul>{% endif %}
         {% if sec.get('body') %}<p>{{ sec.body }}</p>{% endif %}

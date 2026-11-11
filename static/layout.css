@@ -1,0 +1,19 @@
+/* turnday layout compositions (phase 2). Loaded after identity.css. */
+.td-clock{background:var(--card);border-radius:24px;padding:1.75rem;border:1px solid var(--line)}
+.td-tl{list-style:none;padding:0;margin:0 0 .75rem;display:grid;grid-template-columns:repeat(6,1fr)}
+.td-tl li{border-top:6px solid #8FD3C7;padding:.8rem .6rem 0 0;font-size:.92rem}
+.td-tl li:first-child{border-color:#F28C6B}.td-tl li:last-child{border-color:var(--ink)}
+.td-tl b{display:block;font:700 1.1rem var(--font-display)}
+.td-stops .journey-grid{grid-template-columns:repeat(5,1fr);gap:0;position:relative}
+.td-stops .journey-card{border:0;border-top:6px solid #8FD3C7;border-radius:0;background:transparent;padding:1rem 1rem 0 0}
+.td-stops .journey-card:nth-child(odd){border-top-color:#F28C6B}
+.td-q{text-align:center;font:600 .8rem var(--font-display);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 .5rem}
+.page-quiz .tiny.muted{display:none}
+.td-style{display:grid;grid-template-columns:auto 1fr;gap:2rem;align-items:center;background:var(--ink);color:#fff;border-radius:28px;padding:2rem;margin-bottom:1.5rem}
+.td-style h1{color:#fff}.td-style .lede,.td-style .muted{color:#D9E6F2}.td-style .eyebrow{color:#8FD3C7}
+.td-key{width:110px;height:150px;border-radius:55px 55px 18px 18px;background:#F28C6B;position:relative}
+.td-key::before{content:"";position:absolute;top:18px;left:50%;margin-left:-17px;width:34px;height:34px;border-radius:50%;background:var(--ink)}
+.page-results .plan-preview,.page-results .plan-full{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.page-results .plan-preview>h2,.page-results .plan-full>h2,.page-results .plan-full>p{grid-column:1/-1}
+.td-panel{margin:0;border-radius:22px}
+@media (max-width:860px){.td-tl{grid-template-columns:1fr 1fr}.td-stops .journey-grid{grid-template-columns:1fr}.td-style{grid-template-columns:1fr}.td-key{width:70px;height:96px}}
